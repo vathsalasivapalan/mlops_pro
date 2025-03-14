@@ -24,15 +24,15 @@ list_of_files = [
     "experiments/experiments.ipynb"
 ]
 
-# Create directories and files
-for file_path in list_of_files:
-    file_path = Path(file_path)
-    file_dir = file_path.parent  # Get parent directory
 
-    # Create the directory if it doesn't exist
-    if file_dir and not file_dir.exists():
-        file_dir.mkdir(parents=True, exist_ok=True)
+for filepath in list_of_files:
+    filepath = Path(filepath)  # Correct variable usage
+    filedir, filename = os.path.split(filepath)  # Get parent directory
 
-    # Create the file if it does not exist or is empty
-    if not file_path.exists() or file_path.stat().st_size == 0:
-        file_path.touch()
+    # Create the parent directory if it does not exist
+    if filedir:
+        os.makedirs(filedir, exist_ok=True)  # Use os.makedirs()
+
+    if (not os.path.exists(filepath)) or (os.path.getsize(filepath) == 0):
+       with open(filepath, 'w') as f:
+          pass  # Create an empty file
